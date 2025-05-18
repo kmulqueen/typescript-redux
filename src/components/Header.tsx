@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import Cart from './Cart.tsx';
+import Cart from "./Cart.tsx";
+import { useAppSelector } from "../store/hooks.ts";
 
 export default function Header() {
   const [cartIsVisible, setCartIsVisible] = useState(false);
+  const cartQuantity = useAppSelector((state) =>
+    state.cart.items.reduce((acc, item) => acc + item.quantity, 0)
+  );
 
   function handleOpenCartClick() {
     setCartIsVisible(true);
@@ -22,7 +26,7 @@ export default function Header() {
           <h1>Elegant Redux</h1>
         </div>
         <p>
-          <button onClick={handleOpenCartClick}>Cart (0)</button>
+          <button onClick={handleOpenCartClick}>Cart ({cartQuantity})</button>
         </p>
       </header>
     </>
